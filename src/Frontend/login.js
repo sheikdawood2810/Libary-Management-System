@@ -66,20 +66,21 @@ function loginStudent() {
     }
 
 
-   fetch("https://libary-management-system-hblc.onrender.com/students/login", {
+    fetch(
+        "https://libary-management-system-hblc.onrender.com/students/login",
+        {
+            method: "POST",
 
-        method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-            studentCode: studentCode,
-            password: password
-        })
-
-    })
+            body: JSON.stringify({
+                studentCode: studentCode,
+                password: password
+            })
+        }
+    )
 
     .then(response => {
 
@@ -152,20 +153,21 @@ function loginLibrarian() {
     }
 
 
-    fetch("https://libary-management-system-hblc.onrender.com/librarian/login", {
+    fetch(
+        "https://libary-management-system-hblc.onrender.com/librarian/login",
+        {
+            method: "POST",
 
-        method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-            username: username,
-            password: password
-        })
-
-    })
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        }
+    )
 
     .then(response => {
 
@@ -223,6 +225,18 @@ function showRegisterForm() {
     document.getElementById(
         "registerMessage"
     ).textContent = "";
+
+    // Make sure the button is enabled
+    // whenever the registration form is opened.
+    const registerButton =
+        document.getElementById("registerButton");
+
+    if (registerButton) {
+
+        registerButton.disabled = false;
+
+        registerButton.textContent = "Register";
+    }
 }
 
 
@@ -274,11 +288,31 @@ function registerStudent() {
             "registerMessage"
         );
 
-        const registerButton =
-    document.getElementById("registerButton");
+    const registerButton =
+        document.getElementById(
+            "registerButton"
+        );
 
 
+    // Check that the button exists
+    if (!registerButton) {
 
+        console.error(
+            "Register button not found."
+        );
+
+        return;
+    }
+
+
+    // Prevent multiple clicks
+    // if a registration request is already running.
+    if (registerButton.disabled) {
+        return;
+    }
+
+
+    // Empty field validation
     if (
         name === "" ||
         email === "" ||
@@ -294,7 +328,7 @@ function registerStudent() {
     }
 
 
-
+    // Email format validation
     const emailPattern =
         /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
@@ -308,7 +342,7 @@ function registerStudent() {
     }
 
 
-
+    // Password confirmation
     if (password !== confirmPassword) {
 
         message.textContent =
@@ -318,6 +352,7 @@ function registerStudent() {
     }
 
 
+    // Password length
     if (password.length < 6) {
 
         message.textContent =
@@ -326,8 +361,12 @@ function registerStudent() {
         return;
     }
 
-      registerButton.disabled = true;
-      registerButton.textContent = "Registering...";
+
+    // Disable button BEFORE sending request
+    registerButton.disabled = true;
+
+    registerButton.textContent =
+        "Registering...";
 
 
     const student = {
@@ -342,10 +381,9 @@ function registerStudent() {
     };
 
 
-
-   fetch(
-    "https://libary-management-system-hblc.onrender.com/students",{
-
+    fetch(
+        "https://libary-management-system-hblc.onrender.com/students",
+        {
             method: "POST",
 
             headers: {
@@ -370,7 +408,6 @@ function registerStudent() {
 
         return response.json();
     })
-
 
 
     .then(student => {
@@ -444,8 +481,15 @@ function registerStudent() {
         document.getElementById(
             "registerMessage"
         ).textContent = "";
-    })
 
+
+        // Reset button for next registration
+
+        registerButton.disabled = false;
+
+        registerButton.textContent =
+            "Register";
+    })
 
 
     .catch(error => {
@@ -455,8 +499,13 @@ function registerStudent() {
             error
         );
 
+
+        // Re-enable button if registration fails
+
         registerButton.disabled = false;
-        registerButton.textContent = "Register";
+
+        registerButton.textContent =
+            "Register";
 
 
         message.textContent =
