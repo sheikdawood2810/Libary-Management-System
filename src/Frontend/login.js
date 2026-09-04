@@ -66,7 +66,7 @@ function loginStudent() {
     }
 
 
-    fetch("http://localhost:8080/students/login", {
+   fetch("https://libary-management-system-hblc.onrender.com/students/login", {
 
         method: "POST",
 
@@ -152,7 +152,7 @@ function loginLibrarian() {
     }
 
 
-    fetch("http://localhost:8080/librarian/login", {
+    fetch("https://libary-management-system-hblc.onrender.com/librarian/login", {
 
         method: "POST",
 
@@ -338,10 +338,9 @@ function registerStudent() {
 
 
 
-    fetch(
-        "http://localhost:8080/students",
-        {
-
+   fetch(
+    "https://libary-management-system-hblc.onrender.com/students",{
+        
             method: "POST",
 
             headers: {

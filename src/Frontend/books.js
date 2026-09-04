@@ -49,7 +49,7 @@ if (role === "librarian") {
 
 
 function loadBooks(
-    url = "http://localhost:8080/books"
+    url = "https://libary-management-system-hblc.onrender.com/books"
 ) {
 
     fetch(url)
@@ -191,7 +191,7 @@ function searchBooks() {
 
 
     loadBooks(
-        "http://localhost:8080/books/search?title="
+        "https://libary-management-system-hblc.onrender.com/books/search?title="
         + encodeURIComponent(title)
     );
 }
@@ -232,7 +232,7 @@ function saveBook() {
     };
 
 
-    fetch("http://localhost:8080/books", {
+    fetch("https://libary-management-system-hblc.onrender.com/books", {
 
         method: "POST",
 
@@ -289,7 +289,7 @@ function deleteBook(id) {
 
 
     fetch(
-        `http://localhost:8080/books/${id}`,
+        `https://libary-management-system-hblc.onrender.com/books/${id}`,
         {
             method: "DELETE"
         }
@@ -326,7 +326,7 @@ function deleteBook(id) {
 function editBook(id) {
 
     fetch(
-        "http://localhost:8080/books"
+        "https://libary-management-system-hblc.onrender.com/books"
     )
 
     .then(response => {
@@ -444,7 +444,7 @@ function updateBook() {
 
 
     fetch(
-        `http://localhost:8080/books/${id}`,
+        `https://libary-management-system-hblc.onrender.com/books/${id}`,
         {
 
             method: "PUT",
@@ -554,7 +554,7 @@ function borrowBook(bookId) {
 
 
 
-    fetch("http://localhost:8080/books")
+    fetch("https://libary-management-system-hblc.onrender.com/books")
 
         .then(response => {
 
@@ -598,7 +598,7 @@ function borrowBook(bookId) {
 
 
             return fetch(
-                "http://localhost:8080/borrows",
+                "https://libary-management-system-hblc.onrender.com/borrows",
                 {
 
                     method: "POST",

@@ -1,32 +1,3 @@
-/* ==========================================================================
-   LIBRARY MANAGEMENT SYSTEM — style.css
-   "Signal Room" theme — deep indigo base, electric cyan for primary
-   action, amber for standout metrics/status. Built directly against the
-   markup in: index.html, studentpanel.html, librarianpanel.html,
-   books.html, students.html, borrows.html, overdue.html.
-
-   TABLE OF CONTENTS
-   1.  Design tokens
-   2.  Reset & base
-   3.  Typography
-   4.  Layout / containers (.dashboard, main)
-   5.  Navbar (.navbar, .nav-links)
-   6.  Cards & dashboard stats (.cards, .card)
-   7.  Buttons (button, .button-secondary)
-   8.  Links
-   9.  Inputs & forms (login, register, add/edit book, search-box)
-   10. Feedback messages (#studentMessage / #registerMessage / #librarianMessage)
-   11. Login screen (.login-container, .role-buttons, #roleSelection)
-   12. Tables (.book-table-container, .book-table)
-   13. Utility / state
-   14. Responsive
-   ========================================================================== */
-
-
-/* ==========================================================================
-   1. DESIGN TOKENS
-   ========================================================================== */
-
 :root {
     --ink: #12172b;
     --ink-soft: #4a5170;
@@ -35,24 +6,37 @@
     --surface: #ffffff;
 
     --indigo: #1f2547;
-    --indigo-dark: #12162e;
-    --cyan: #17c3d6;
-    --cyan-dark: #0fa3b3;
-    --amber: #f2a93b;
-    --amber-dark: #e0972a;
+    --indigo-dark: #0d1026;
+    --cyan: #1ccbe0;
+    --cyan-light: #5be0f0;
+    --cyan-dark: #0e93a3;
+    --amber: #f4ae42;
+    --amber-dark: #d98a1c;
     --coral: #ef6461;
+    --coral-dark: #d94f4c;
     --violet: #8b6ef2;
 
     --border: #dde2ee;
     --border-soft: #eceff6;
-    --shadow: 0 3px 10px rgba(18, 23, 43, 0.08);
-    --shadow-hover: 0 10px 24px rgba(18, 23, 43, 0.16);
+
+    /* deeper, slightly warmer shadow ramp for more perceived depth */
+    --shadow-sm: 0 1px 3px rgba(18, 23, 43, 0.07);
+    --shadow: 0 4px 14px rgba(18, 23, 43, 0.10);
+    --shadow-hover: 0 14px 30px rgba(18, 23, 43, 0.18);
+    --shadow-press: 0 2px 6px rgba(18, 23, 43, 0.14);
+
+    --glow-cyan: 0 4px 16px rgba(28, 203, 224, 0.4);
+    --glow-cyan-soft: 0 0 0 4px rgba(28, 203, 224, 0.16);
 
     --radius-sm: 6px;
     --radius-md: 10px;
     --radius-lg: 14px;
 
-    --speed: 180ms;
+    --speed: 160ms;
+    --speed-fast: 90ms;
+
+    /* minimum comfortable touch target */
+    --tap: 44px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -63,14 +47,11 @@
 }
 
 
-/* ==========================================================================
-   2. RESET & BASE
-   ========================================================================== */
-
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -88,19 +69,24 @@ body {
     color: var(--ink);
     line-height: 1.5;
     min-height: 100vh;
+    min-height: 100dvh;
 }
 
 /* index.html has no navbar — the bare .login-container on flat grey reads
-   as an empty white page, so give that page its own branded backdrop */
+   as an empty white page, so give that page its own branded backdrop.
+   Richer, three-stop gradient for more color depth. */
 body:has(.login-container) {
     background:
-        radial-gradient(circle at 15% 10%, rgba(23, 195, 214, 0.16), transparent 45%),
-        radial-gradient(circle at 85% 90%, rgba(139, 110, 242, 0.14), transparent 45%),
+        radial-gradient(circle at 15% 10%, rgba(28, 203, 224, 0.20), transparent 45%),
+        radial-gradient(circle at 85% 15%, rgba(244, 174, 66, 0.10), transparent 40%),
+        radial-gradient(circle at 85% 90%, rgba(139, 110, 242, 0.16), transparent 45%),
         linear-gradient(160deg, var(--indigo-dark) 0%, var(--indigo) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    padding: max(20px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right))
+              max(20px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
     overflow-y: auto;
 }
 
@@ -116,9 +102,6 @@ img, svg {
 }
 
 
-/* ==========================================================================
-   3. TYPOGRAPHY
-   ========================================================================== */
 
 h1, h2, h3 {
     color: var(--indigo);
@@ -150,10 +133,6 @@ main.dashboard > p,
 }
 
 
-/* ==========================================================================
-   4. LAYOUT / CONTAINERS
-   ========================================================================== */
-
 main.dashboard {
     padding: 35px;
     max-width: 1200px;
@@ -176,8 +155,10 @@ main.dashboard {
     gap: 12px;
 
     padding: 15px 30px;
+    padding-top: max(15px, env(safe-area-inset-top));
 
     border-bottom: 3px solid var(--cyan);
+    box-shadow: 0 4px 14px rgba(13, 16, 38, 0.25);
 }
 
 .navbar h2 {
@@ -200,6 +181,9 @@ main.dashboard {
     text-decoration: none;
     font-size: 15px;
     padding-bottom: 4px;
+    min-height: var(--tap);
+    display: inline-flex;
+    align-items: center;
 }
 
 /* underline draws in on hover instead of a plain browser underline */
@@ -207,7 +191,7 @@ main.dashboard {
     content: "";
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: 8px;
     width: 0%;
     height: 2px;
     background: var(--cyan);
@@ -227,18 +211,19 @@ main.dashboard {
     border: 1.5px solid rgba(255, 255, 255, 0.35);
     padding: 7px 14px;
     margin: 0;
-}
-
-.nav-links button:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: #ffffff;
     box-shadow: none;
 }
 
+.nav-links button:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
+}
 
-/* ==========================================================================
-   6. CARDS & DASHBOARD STATS
-   ========================================================================== */
+.nav-links button:active {
+    background: rgba(255, 255, 255, 0.22);
+}
+
 
 .cards {
     display: flex;
@@ -275,6 +260,18 @@ main.dashboard {
     right: 0;
     height: 4px;
     background: var(--cyan);
+    transition: height var(--speed) ease;
+}
+
+/* soft glow under the accent bar, colored per-card via currentColor trick */
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120px 60px at 20% 0%, rgba(28, 203, 224, 0.06), transparent 70%);
+    opacity: 0;
+    transition: opacity var(--speed) ease;
+    pointer-events: none;
 }
 
 /* accent cycles through the palette so rows of stat cards read as
@@ -289,6 +286,19 @@ main.dashboard {
     transform: translateY(-4px);
     box-shadow: var(--shadow-hover);
     border-color: var(--cyan);
+}
+
+.card:hover::before {
+    height: 5px;
+}
+
+.card:hover::after {
+    opacity: 1;
+}
+
+.card:active {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
 }
 
 .card h3 {
@@ -310,17 +320,18 @@ main.dashboard {
 }
 
 
-/* ==========================================================================
-   7. BUTTONS
-   ========================================================================== */
-
 button {
-    background: var(--cyan-dark);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    background: linear-gradient(135deg, var(--cyan) 0%, var(--cyan-dark) 100%);
     color: #ffffff;
 
     border: none;
 
-    padding: 10px 16px;
+    padding: 11px 18px;
+    min-height: var(--tap);
 
     border-radius: var(--radius-sm);
 
@@ -332,16 +343,41 @@ button {
 
     margin: 5px 5px 5px 0;
 
-    transition: background var(--speed) ease, transform 80ms ease, box-shadow var(--speed) ease;
+    box-shadow: var(--shadow-sm);
+
+    transition: background var(--speed) ease, transform var(--speed-fast) ease,
+                box-shadow var(--speed) ease, filter var(--speed) ease;
+}
+
+/* diagonal sheen that sweeps across on hover for a bit of life */
+button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.35) 50%, transparent 60%);
+    transform: translateX(-120%);
+    transition: transform var(--speed) ease;
 }
 
 button:hover {
-    background: var(--cyan);
-    box-shadow: 0 4px 12px rgba(23, 195, 214, 0.35);
+    background: linear-gradient(135deg, var(--cyan-light) 0%, var(--cyan) 100%);
+    box-shadow: var(--glow-cyan);
+    transform: translateY(-1px);
+}
+
+button:hover::before {
+    transform: translateX(120%);
+}
+
+button:focus-visible {
+    box-shadow: var(--glow-cyan-soft), var(--shadow);
 }
 
 button:active {
-    transform: scale(0.97);
+    transform: scale(0.97) translateY(0);
+    box-shadow: var(--shadow-press);
+    filter: brightness(0.96);
 }
 
 button:disabled {
@@ -350,6 +386,11 @@ button:disabled {
     cursor: not-allowed;
     box-shadow: none;
     transform: none;
+    filter: none;
+}
+
+button:disabled::before {
+    display: none;
 }
 
 /* quieter action style — available for use, e.g. "Cancel" / "Back" buttons */
@@ -357,51 +398,59 @@ button:disabled {
     background: transparent;
     color: var(--indigo);
     border: 1.5px solid var(--border);
+    box-shadow: none;
+}
+
+.button-secondary::before {
+    display: none;
 }
 
 .button-secondary:hover {
     background: var(--surface);
     border-color: var(--cyan);
-    box-shadow: none;
+    color: var(--cyan-dark);
+    box-shadow: 0 2px 8px rgba(18, 23, 43, 0.08);
+    transform: translateY(-1px);
+}
+
+.button-secondary:active {
+    background: var(--border-soft);
+    transform: scale(0.98);
 }
 
 /* buttons that sit directly under a table row of actions need tighter
-   spacing than the standalone form buttons */
+   spacing than the standalone form buttons, but stay tap-friendly */
 .book-table button {
-    padding: 6px 12px;
+    padding: 7px 13px;
+    min-height: 36px;
     font-size: 13px;
     margin: 2px;
 }
 
-
-/* ==========================================================================
-   8. LINKS
-   ========================================================================== */
-
 a {
     color: var(--cyan-dark);
+    transition: color var(--speed) ease;
 }
 
 a:hover {
     color: var(--cyan);
 }
 
-
-/* ==========================================================================
-   9. INPUTS & FORMS
-   ========================================================================== */
-
 input {
     width: 100%;
     padding: 11px;
     margin: 7px 0;
 
+    /* 16px prevents iOS Safari from auto-zooming on focus */
+    font-size: 16px;
+
     border: 1.5px solid var(--border);
     border-radius: var(--radius-sm);
 
-    font-size: 14px;
     font-family: inherit;
     color: var(--ink);
+
+    min-height: var(--tap);
 
     transition: border-color var(--speed) ease, box-shadow var(--speed) ease;
 }
@@ -413,7 +462,7 @@ input:hover {
 input:focus {
     outline: none;
     border-color: var(--cyan);
-    box-shadow: 0 0 0 3px rgba(23, 195, 214, 0.18);
+    box-shadow: 0 0 0 3px rgba(28, 203, 224, 0.18);
 }
 
 input::placeholder {
@@ -473,15 +522,11 @@ input[type="hidden"] {
 }
 
 
-/* ==========================================================================
-   10. FEEDBACK MESSAGES
-   ========================================================================== */
-
 #studentMessage,
 #registerMessage,
 #librarianMessage {
     font-size: 13.5px;
-    color: var(--coral);
+    color: var(--coral-dark);
     min-height: 18px;
     margin-top: 4px;
 }
@@ -492,10 +537,6 @@ input[type="hidden"] {
     margin: 0;
 }
 
-
-/* ==========================================================================
-   11. LOGIN SCREEN
-   ========================================================================== */
 
 .login-container {
     width: 400px;
@@ -510,13 +551,18 @@ input[type="hidden"] {
     border-radius: var(--radius-lg);
     border-top: 4px solid var(--cyan);
 
-    box-shadow: 0 12px 30px rgba(18, 23, 43, 0.14);
+    box-shadow: 0 16px 36px rgba(13, 16, 38, 0.28);
 
     text-align: center;
 }
 
 .login-container h1 {
     margin-bottom: 25px;
+    background: linear-gradient(120deg, var(--indigo) 0%, var(--cyan-dark) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
 }
 
 .login-container h2 {
@@ -540,20 +586,28 @@ input[type="hidden"] {
     min-width: 110px;
     background: var(--indigo);
     margin: 5px;
+    box-shadow: none;
+}
+
+.role-buttons button::before {
+    display: none;
 }
 
 .role-buttons button:hover {
     background: var(--indigo-dark);
-    box-shadow: 0 4px 12px rgba(31, 37, 71, 0.3);
+    box-shadow: 0 6px 16px rgba(31, 37, 71, 0.35);
+    transform: translateY(-1px);
 }
 
 .role-buttons button.active {
-    background: var(--amber);
+    background: linear-gradient(135deg, var(--amber) 0%, var(--amber-dark) 100%);
     color: var(--indigo-dark);
+    box-shadow: 0 4px 14px rgba(244, 174, 66, 0.4);
 }
 
 .role-buttons button.active:hover {
-    background: var(--amber-dark);
+    background: linear-gradient(135deg, var(--amber) 0%, var(--amber-dark) 100%);
+    filter: brightness(1.03);
 }
 
 /* login/register sub-panels stack vertically and left-align their fields,
@@ -581,13 +635,10 @@ input[type="hidden"] {
 
 #studentLoginForm > p button {
     padding: 4px 10px;
+    min-height: auto;
     font-size: 13px;
 }
 
-
-/* ==========================================================================
-   12. TABLES
-   ========================================================================== */
 
 .book-table-container {
     background: var(--surface);
@@ -609,7 +660,7 @@ input[type="hidden"] {
 }
 
 .book-table thead th {
-    background: var(--indigo);
+    background: linear-gradient(120deg, var(--indigo) 0%, var(--indigo-dark) 100%);
     color: #ffffff;
     text-align: left;
     font-weight: 600;
@@ -617,6 +668,9 @@ input[type="hidden"] {
     letter-spacing: 0.2px;
     padding: 14px 16px;
     white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .book-table tbody td {
@@ -630,8 +684,12 @@ input[type="hidden"] {
     border-bottom: none;
 }
 
+.book-table tbody tr {
+    transition: background var(--speed) ease;
+}
+
 .book-table tbody tr:hover {
-    background: var(--bg);
+    background: rgba(28, 203, 224, 0.06);
 }
 
 .book-table tbody tr:nth-child(even) {
@@ -639,7 +697,7 @@ input[type="hidden"] {
 }
 
 .book-table tbody tr:nth-child(even):hover {
-    background: var(--bg);
+    background: rgba(28, 203, 224, 0.08);
 }
 
 /* empty-state row, if JS renders one as a single wide <td> */
@@ -650,10 +708,6 @@ input[type="hidden"] {
 }
 
 
-/* ==========================================================================
-   13. UTILITY / STATE
-   ========================================================================== */
-
 [style*="display: none"] {
     /* JS toggles inline display:none/block on forms — no override needed,
        this rule intentionally left as documentation only. */
@@ -663,10 +717,6 @@ input[type="hidden"] {
     margin-top: 10px;
 }
 
-
-/* ==========================================================================
-   14. RESPONSIVE
-   ========================================================================== */
 
 @media (max-width: 900px) {
     main.dashboard {
@@ -680,11 +730,17 @@ input[type="hidden"] {
         align-items: flex-start;
         gap: 12px;
         padding: 15px 20px;
+        padding-top: max(15px, env(safe-area-inset-top));
+    }
+
+    .navbar h2 {
+        font-size: 18px;
     }
 
     .nav-links {
         width: 100%;
-        gap: 14px;
+        gap: 10px;
+        justify-content: flex-start;
     }
 
     .nav-links button {
@@ -693,22 +749,59 @@ input[type="hidden"] {
 
     main.dashboard {
         padding: 18px;
+        padding-bottom: max(18px, env(safe-area-inset-bottom));
+    }
+
+    h1 {
+        font-size: 22px;
     }
 
     .cards {
         flex-direction: column;
+        gap: 14px;
+        margin: 20px 0 30px;
     }
 
     .card {
         min-width: 0;
+        padding: 20px;
+    }
+
+    /* on touch devices hover states won't clear, so lean on active/tap
+       feedback instead of relying on the lift-on-hover interaction */
+    .card:hover {
+        transform: none;
+        box-shadow: var(--shadow);
+    }
+
+    .card:active {
+        transform: scale(0.98);
+        box-shadow: var(--shadow-hover);
+    }
+
+    button {
+        width: 100%;
+        margin: 6px 0;
+    }
+
+    /* buttons that should stay side-by-side (role selector, table actions,
+       search bar) opt back out of the full-width stacking above */
+    .role-buttons button,
+    .book-table button,
+    .nav-links button {
+        width: auto;
     }
 
     .role-buttons {
         flex-direction: column;
     }
 
+    .role-buttons button {
+        width: 100%;
+    }
+
     .login-container {
-        margin: 40px auto;
+        margin: 24px auto;
         padding: 25px;
     }
 
@@ -734,5 +827,37 @@ input[type="hidden"] {
     .book-table thead th,
     .book-table tbody td {
         padding: 10px 12px;
+    }
+
+    .book-table button {
+        width: auto;
+        display: inline-block;
+    }
+}
+
+@media (max-width: 400px) {
+    .login-container h1 {
+        font-size: 22px;
+    }
+
+    .card p {
+        font-size: 24px;
+    }
+}
+
+/* larger touch targets specifically for touch-only devices, regardless
+   of viewport width (e.g. a touch laptop at desktop resolution) */
+@media (hover: none) and (pointer: coarse) {
+    button {
+        min-height: 46px;
+    }
+
+    .book-table button {
+        min-height: 40px;
+        padding: 9px 14px;
+    }
+
+    .nav-links a {
+        padding: 8px 0;
     }
 }

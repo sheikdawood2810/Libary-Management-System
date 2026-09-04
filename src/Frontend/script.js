@@ -2,11 +2,7 @@ const role = localStorage.getItem("role");
 const studentCode = localStorage.getItem("studentCode");
 
 
-// ==============================
-// BOOK COUNT
-// ==============================
-
-fetch("http://localhost:8080/books")
+fetch("https://libary-management-system-hblc.onrender.com/books")
     .then(response => response.json())
     .then(books => {
 
@@ -20,14 +16,9 @@ fetch("http://localhost:8080/books")
 
     });
 
-
-// ==============================
-// STUDENT COUNT
-// ==============================
-
 if (role === "librarian") {
 
-    fetch("http://localhost:8080/students")
+    fetch("https://libary-management-system-hblc.onrender.com/students")
         .then(response => response.json())
         .then(students => {
 
@@ -43,11 +34,7 @@ if (role === "librarian") {
 }
 
 
-// ==============================
-// BORROW COUNTS
-// ==============================
-
-fetch("http://localhost:8080/borrows")
+fetch("https://libary-management-system-hblc.onrender.com/borrows")
     .then(response => response.json())
     .then(borrows => {
 
@@ -101,10 +88,6 @@ fetch("http://localhost:8080/borrows")
 
     });
 
-
-// ==============================
-// NAVIGATION
-// ==============================
 
 function showBooks() {
     window.location.href = "books.html";

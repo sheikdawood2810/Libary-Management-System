@@ -14,10 +14,6 @@ const borrowHeader =
     document.getElementById("borrowHeader");
 
 
-// ======================================
-// PAGE SETUP
-// ======================================
-
 if (role === "student") {
 
     borrowTitle.textContent =
@@ -55,13 +51,9 @@ if (role === "student") {
 }
 
 
-// ======================================
-// LOAD BORROWS
-// ======================================
-
 function loadBorrows() {
 
-    fetch("http://localhost:8080/borrows")
+    fetch("https://libary-management-system-hblc.onrender.com/borrows")
 
         .then(response => {
 
@@ -82,10 +74,6 @@ function loadBorrows() {
 
             borrowList.innerHTML = "";
 
-
-            // ==================================
-            // STUDENT
-            // ==================================
 
             if (role === "student") {
 
@@ -187,11 +175,6 @@ function loadBorrows() {
                     `;
                 }
             }
-
-
-            // ==================================
-            // LIBRARIAN
-            // ==================================
 
             else {
 
@@ -311,10 +294,6 @@ function loadBorrows() {
 }
 
 
-// ======================================
-// RETURN BOOK
-// ======================================
-
 function returnBook(id) {
 
     if (
@@ -327,7 +306,7 @@ function returnBook(id) {
 
 
     fetch(
-        `http://localhost:8080/borrows/return/${id}`,
+        `https://libary-management-system-hblc.onrender.com/borrows/return/${id}`,
         {
             method: "PUT"
         }
@@ -372,10 +351,6 @@ function returnBook(id) {
 }
 
 
-// ======================================
-// EXTEND BOOK
-// ======================================
-
 function extendBook(id) {
 
     if (
@@ -388,7 +363,7 @@ function extendBook(id) {
 
 
     fetch(
-        `http://localhost:8080/borrows/extend/${id}`,
+        `https://libary-management-system-hblc.onrender.com/borrows/extend/${id}`,
         {
             method: "PUT"
         }
@@ -432,9 +407,5 @@ function extendBook(id) {
     });
 }
 
-
-// ======================================
-// INITIAL LOAD
-// ======================================
 
 loadBorrows();

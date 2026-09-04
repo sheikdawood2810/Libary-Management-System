@@ -4,7 +4,7 @@ const studentCode = localStorage.getItem("studentCode");
 
 function loadStudents() {
 
-    let url = "http://localhost:8080/students";
+    let url = "https://libary-management-system-hblc.onrender.com/students";
 
     // Student should only load their own profile
     if (role === "student") {
@@ -23,7 +23,7 @@ function loadStudents() {
         }
 
         url =
-            "http://localhost:8080/students/" +
+            "https://libary-management-system-hblc.onrender.com/students/" +
             encodeURIComponent(studentCode);
     }
 
@@ -137,7 +137,7 @@ function searchStudent() {
 
 
     fetch(
-        "http://localhost:8080/students/" +
+        "https://libary-management-system-hblc.onrender.com/students/" +
         encodeURIComponent(studentCode)
     )
 

@@ -4,7 +4,7 @@ const role = localStorage.getItem("role");
 const studentCode = localStorage.getItem("studentCode");
 
 
-fetch("http://localhost:8080/borrows")
+fetch("https://libary-management-system-hblc.onrender.com/borrows")
 
     .then(response => {
 
@@ -26,10 +26,6 @@ fetch("http://localhost:8080/borrows")
         let overdueBooks;
 
 
-        // ==================================
-        // STUDENT
-        // ==================================
-
         if (role === "student") {
 
             overdueBooks = borrows.filter(borrow =>
@@ -43,10 +39,6 @@ fetch("http://localhost:8080/borrows")
         }
 
 
-        // ==================================
-        // LIBRARIAN
-        // ==================================
-
         else {
 
             overdueBooks = borrows.filter(borrow =>
@@ -58,9 +50,6 @@ fetch("http://localhost:8080/borrows")
         }
 
 
-        // ==================================
-        // DISPLAY OVERDUE BOOKS
-        // ==================================
 
         overdueBooks.forEach(borrow => {
 
@@ -78,10 +67,6 @@ fetch("http://localhost:8080/borrows")
             overdueList.appendChild(row);
         });
 
-
-        // ==================================
-        // NO OVERDUE BOOKS
-        // ==================================
 
         if (overdueBooks.length === 0) {
 
