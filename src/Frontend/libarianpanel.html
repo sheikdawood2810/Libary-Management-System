@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Librarian Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <h2> Library Management System</h2>
+
+        <div class="nav-links">
+            <a href="librarianpanel.html">Dashboard</a>
+            <a href="books.html">Books</a>
+            <a href="students.html">Students</a>
+            <a href="borrows.html">Borrows</a>
+            <a href="overdue.html">Overdue</a>
+
+     <button type="button" onclick="logout()">
+        Logout
+     </button>
+        </div>
+
+    </nav>
+
+
+    <main class="dashboard">
+
+        <h1> Librarian Dashboard</h1>
+
+        <p>Manage the library system</p>
+
+
+        <div class="cards">
+
+    <div class="card" onclick="window.location.href='books.html'">
+       <h3>📚 Books</h3>
+       <p id="totalBooks">0</p>
+       </div>
+
+            <div class="card">
+                <h3> Students</h3>
+                <p id="totalStudents">0</p>
+            </div>
+
+
+            <div class="card">
+                <h3> Active Borrows</h3>
+                <p id="activeBorrows">0</p>
+            </div>
+
+
+<div class="card" onclick="window.location.href='overdue.html'">
+    <h3> Overdue Books</h3>
+      <p id="overdueBooks">0</p>
+     </div>
+
+        </div>
+
+
+        <h2>Library Management</h2>
+
+        <div class="cards">
+
+            <div class="card" onclick="window.location.href='books.html'">
+                <h3>Add / Manage Books</h3>
+                <p>Manage library books</p>
+            </div>
+
+
+            <div class="card" onclick="window.location.href='students.html'">
+                <h3 >manage Students</h3>
+                <p>View and manage students</p>
+            </div>
+
+
+            <div class="card" onclick="window.location.href='borrows.html'">
+                <h3> Manage Borrows</h3>
+                <p>Return and extend books</p>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="auth.js"></script>
+
+<script>
+    requireLibrarian();
+</script>
+
+<script src="script.js"></script>
+</body>
+
+</html>

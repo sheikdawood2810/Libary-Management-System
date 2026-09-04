@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Students - Library Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <h2> Library Management System</h2>
+
+        <div class="nav-links">
+            <a href="index.html">Dashboard</a>
+            <a href="books.html">Books</a>
+            <a href="students.html">Students</a>
+            <a href="#">Borrow</a>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+
+        <h1>Students</h1>
+        <p>My Profile Section </p>
+
+        <div class="search-box">
+
+    <input
+        type="text"
+        id="searchStudentCode"
+        placeholder="Search by student code..."
+    >
+
+    <button type="button" onclick="searchStudent()">
+        Search
+    </button>
+
+   </div>
+
+        <div class="book-table-container">
+
+            <table class="book-table">
+
+               <thead>
+    <tr>
+        <th>Student Code</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+    </tr>
+   </thead>
+
+  <tbody id="studentList">
+   </tbody>
+
+    </table>
+
+        </div>
+
+    </main>
+
+    <script src="students.js"></script>
+
+</body>
+
+</html>

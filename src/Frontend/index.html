@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Library Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <h1> Library Management System</h1>
+
+        <div id="roleSelection">
+
+            <p>Select your role</p>
+
+            <div class="role-buttons">
+
+                <button type="button" onclick="studentLogin()">
+                     Student
+                </button>
+
+                <button type="button" onclick="librarianLogin()">
+                     Librarian
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- Student Login -->
+
+        <div id="studentLoginForm" style="display: none;">
+
+            <h2> Student Login</h2>
+
+            <input
+                type="text"
+                id="studentCode"
+                placeholder="Student ID"
+            >
+
+            <input
+                type="password"
+                id="studentPassword"
+                placeholder="Password"
+            >
+
+            <button type="button" onclick="loginStudent()">
+                Login
+            </button>
+
+            <button type="button" onclick="backToRoles()">
+                Back
+            </button>
+
+            <p id="studentMessage"></p>
+
+
+            <p>
+    New student?
+    <button type="button" onclick="showRegisterForm()">
+        Register here
+    </button>
+</p>
+
+        </div>
+
+        <!-- Student Registration -->
+
+<div id="studentRegisterForm" style="display: none;">
+
+    <h2>🎓 Student Registration</h2>
+
+    <input
+        type="text"
+        id="registerName"
+        placeholder="Full Name"
+    >
+
+    <input
+        type="email"
+        id="registerEmail"
+        placeholder="Email"
+    >
+
+    <input
+        type="tel"
+        id="registerPhone"
+        placeholder="Phone Number"
+    >
+
+    <input
+        type="password"
+        id="registerPassword"
+        placeholder="Password"
+    >
+
+    <input
+        type="password"
+        id="registerConfirmPassword"
+        placeholder="Confirm Password"
+    >
+
+    <button type="button" onclick="registerStudent()">
+        Register
+    </button>
+
+    <button type="button" onclick="backToStudentLogin()">
+        Back to Login
+    </button>
+
+    <p id="registerMessage"></p>
+
+</div>
+
+
+        <!-- Librarian Login -->
+
+        <div id="librarianLoginForm" style="display: none;">
+
+            <h2>👨‍💼 Librarian Login</h2>
+
+            <input
+                type="text"
+                id="librarianUsername"
+                placeholder="Username"
+            >
+
+            <input
+                type="password"
+                id="librarianPassword"
+                placeholder="Password"
+            >
+
+            <button type="button" onclick="loginLibrarian()">
+                Login
+            </button>
+
+            <button type="button" onclick="backToRoles()">
+                Back
+            </button>
+
+            <p id="librarianMessage"></p>
+
+        </div>
+
+    </div>
+
+
+    <script src="login.js"></script>
+
+</body>
+
+</html>

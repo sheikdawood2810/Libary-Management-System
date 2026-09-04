@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <h2> Library Management System</h2>
+
+        <div class="nav-links">
+            <a href="studentpanel.html">Dashboard</a>
+            <a href="books.html">Books</a>
+            <a href="students.html">My Profile</a>
+            <a href="borrows.html">My Borrows</a>
+
+   <button type="button" onclick="logout()">
+        Logout
+     </button>
+    </div>
+
+    </nav>
+
+
+    <main class="dashboard">
+
+        <h1> Student Dashboard</h1>
+
+        <p>Welcome to the Library Management System</p>
+
+
+        <div class="cards">
+
+            <!-- Books -->
+
+            <div class="card"
+                 onclick="window.location.href='books.html'">
+
+                <h3> Books</h3>
+
+                <p id="totalBooks">0</p>
+
+            </div>
+
+
+            <!-- Active Borrows -->
+
+            <div class="card"
+                 onclick="window.location.href='borrows.html'">
+
+                <h3> My Active Borrows</h3>
+
+                <p id="activeBorrows">0</p>
+
+            </div>
+
+
+            <!-- Overdue Books -->
+
+            <div class="card"
+                 onclick="window.location.href='overdue.html'">
+
+                <h3> My Overdue Books</h3>
+
+                <p id="overdueBooks">0</p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- Dashboard JavaScript -->
+
+    <script src="auth.js"></script>
+
+<script>
+    requireStudent();
+</script>
+
+<script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Books - Library Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <h2>📚 Library Management System</h2>
+
+        <div class="nav-links">
+            <a href="#" onclick="goDashboard()">Dashboard</a>
+            <a href="books.html">Books</a>
+            <a href="students.html">Students</a>
+            <a href="borrows.html">Borrow</a>
+        </div>
+
+    </nav>
+
+
+    <main class="dashboard">
+
+        <h1 id="pageTitle">Books</h1>
+
+        <p id="pageDescription">
+            View and search books in the library
+        </p>
+
+
+        <!-- Librarian Controls -->
+
+        <div id="librarianControls"></div>
+
+
+        <!-- Add Book Form -->
+
+        <div id="addBookForm" style="display: none;">
+
+            <h2>Add New Book</h2>
+
+            <input
+                type="text"
+                id="bookTitle"
+                placeholder="Book Title"
+            >
+
+            <input
+                type="text"
+                id="bookAuthor"
+                placeholder="Author"
+            >
+
+            <input
+                type="text"
+                id="bookCategory"
+                placeholder="Category"
+            >
+
+            <input
+                type="number"
+                id="bookAvailable"
+                placeholder="Available Copies"
+                min="0"
+            >
+
+            <button type="button" onclick="saveBook()">
+                Save Book
+            </button>
+
+            <button type="button" onclick="closeBookForm()">
+                Cancel
+            </button>
+
+        </div>
+
+
+        <!-- Edit Book Form -->
+
+        <div id="editBookForm" style="display: none;">
+
+            <h2>Edit Book</h2>
+
+            <input
+                type="hidden"
+                id="editBookId"
+            >
+
+            <input
+                type="text"
+                id="editBookTitle"
+                placeholder="Book Title"
+            
+            >
+
+            <input
+                type="text"
+                id="editBookAuthor"
+                placeholder="Author"
+            >
+
+            <input
+                type="text"
+                id="editBookCategory"
+                placeholder="Category"
+            >
+
+            <input
+                type="number"
+                id="editBookAvailable"
+                placeholder="Available Copies"
+                min="0"
+            >
+
+            <button type="button" onclick="updateBook()">
+                Update Book
+            </button>
+
+            <button type="button" onclick="closeEditForm()">
+                Cancel
+            </button>
+
+        </div>
+
+
+        <!-- Search -->
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchTitle"
+                placeholder="Search book by title..."
+            >
+
+            <button
+                type="button"
+                onclick="searchBooks()"
+            >
+                Search
+            </button>
+
+        </div>
+
+
+        <!-- Books Table -->
+
+        <div class="book-table-container">
+
+            <table class="book-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Book Code</th>
+
+                        <th>Book Title</th>
+
+                        <th>Author</th>
+
+                        <th>Category</th>
+
+                        <th>Available Copies</th>
+
+                        <th
+                            id="actionHeader"
+                            style="display: none;"
+                        >
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="bookList">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+
+    <script src="books.js"></script>
+
+</body>
+
+</html>

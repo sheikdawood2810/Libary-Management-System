@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Borrow Management</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <h2>📚 Library Management System</h2>
+
+        <div class="nav-links">
+            <a href="index.html">Dashboard</a>
+            <a href="books.html">Books</a>
+            <a href="students.html">Students</a>
+            <a href="borrows.html">Borrows</a>
+            <a href="overdue.html">Overdue</a>
+        </div>
+
+    </nav>
+
+    <main class="dashboard">
+
+        <h1 id="borrowTitle">Borrow Records</h1>
+
+        <p id="borrowDescription">
+            View your borrowed books
+        </p>
+
+        <div class="book-table-container">
+
+            <table class="book-table">
+
+                <thead>
+                    <tr id="borrowHeader"></tr>
+                </thead>
+
+                <tbody id="borrowList"></tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+    <script src="borrows.js"></script>
+
+</body>
+
+</html>
