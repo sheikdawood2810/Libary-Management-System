@@ -274,6 +274,9 @@ function registerStudent() {
             "registerMessage"
         );
 
+        const registerButton =
+    document.getElementById("registerButton");
+
 
 
     if (
@@ -323,6 +326,8 @@ function registerStudent() {
         return;
     }
 
+      registerButton.disabled = true;
+      registerButton.textContent = "Registering...";
 
 
     const student = {
@@ -340,7 +345,7 @@ function registerStudent() {
 
    fetch(
     "https://libary-management-system-hblc.onrender.com/students",{
-        
+
             method: "POST",
 
             headers: {
@@ -449,6 +454,9 @@ function registerStudent() {
             "Registration error:",
             error
         );
+
+        registerButton.disabled = false;
+        registerButton.textContent = "Register";
 
 
         message.textContent =
