@@ -1,9 +1,15 @@
 :root {
+    color-scheme: light;
+
     --ink: #12172b;
     --ink-soft: #4a5170;
     --ink-faint: #7c8296;
     --bg: #eef1f7;
     --surface: #ffffff;
+
+    /* semantic heading color, kept separate from --indigo so dark mode can
+       relight text without touching indigo's use as a brand/background tone */
+    --heading: #1f2547;
 
     --indigo: #1f2547;
     --indigo-dark: #0d1026;
@@ -18,6 +24,9 @@
 
     --border: #dde2ee;
     --border-soft: #eceff6;
+
+    /* even-row table stripe, themed separately since it's a plain hex today */
+    --stripe: #f8f9fc;
 
     /* deeper, slightly warmer shadow ramp for more perceived depth */
     --shadow-sm: 0 1px 3px rgba(18, 23, 43, 0.07);
@@ -37,6 +46,90 @@
 
     /* minimum comfortable touch target */
     --tap: 44px;
+}
+
+/* native checkbox/radio/range controls tint themselves with this,
+   so they stay on-brand and legible in both themes automatically */
+:root, [data-theme="dark"] {
+    accent-color: var(--cyan);
+}
+
+/* ============================================================
+   DARK MODE
+   Two ways in:
+   1) System preference — kicks in automatically via prefers-color-scheme,
+      unless the page has explicitly opted into a theme (data-theme set).
+   2) Manual toggle — set <html data-theme="dark"> or data-theme="light"
+      (e.g. from a theme-switch button) to override the system preference.
+   Both paths land on the exact same variable values below, so nothing
+   else in this file needs to know which path was used.
+   ============================================================ */
+
+[data-theme="dark"] {
+    color-scheme: dark;
+
+    --ink: #eef1f7;
+    --ink-soft: #b7bedb;
+    --ink-faint: #8890ac;
+    --bg: #0b0e1f;
+    --surface: #161b36;
+
+    --heading: #f2f4fb;
+
+    --border: #2a3059;
+    --border-soft: #212747;
+
+    --stripe: #12162c;
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+    --shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+    --shadow-hover: 0 14px 30px rgba(0, 0, 0, 0.55);
+    --shadow-press: 0 2px 6px rgba(0, 0, 0, 0.5);
+
+    --glow-cyan: 0 4px 18px rgba(28, 203, 224, 0.55);
+    --glow-cyan-soft: 0 0 0 4px rgba(28, 203, 224, 0.28);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]):not([data-theme="dark"]) {
+        color-scheme: dark;
+
+        --ink: #eef1f7;
+        --ink-soft: #b7bedb;
+        --ink-faint: #8890ac;
+        --bg: #0b0e1f;
+        --surface: #161b36;
+
+        --heading: #f2f4fb;
+
+        --border: #2a3059;
+        --border-soft: #212747;
+
+        --stripe: #12162c;
+
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+        --shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+        --shadow-hover: 0 14px 30px rgba(0, 0, 0, 0.55);
+        --shadow-press: 0 2px 6px rgba(0, 0, 0, 0.5);
+
+        --glow-cyan: 0 4px 18px rgba(28, 203, 224, 0.55);
+        --glow-cyan-soft: 0 0 0 4px rgba(28, 203, 224, 0.28);
+    }
+}
+
+/* smooth, non-jarring theme swaps instead of an abrupt color snap */
+body,
+.navbar,
+.card,
+.book-table-container,
+#addBookForm,
+#editBookForm,
+.login-container,
+input,
+button {
+    transition-property: background-color, color, border-color, box-shadow, transform, filter;
+    transition-duration: var(--speed);
+    transition-timing-function: ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -104,7 +197,7 @@ img, svg {
 
 
 h1, h2, h3 {
-    color: var(--indigo);
+    color: var(--heading);
     font-weight: 700;
     letter-spacing: 0.1px;
 }
@@ -220,6 +313,99 @@ main.dashboard {
     background: rgba(255, 255, 255, 0.22);
 }
 
+/* ============================================================
+   THEME TOGGLE SWITCH
+   Drop this markup wherever you want the control, e.g. in .nav-links
+   or the login card:
+
+     <button type="button" class="theme-toggle" id="themeToggle"
+             aria-label="Toggle dark mode" aria-pressed="false">
+       <span class="theme-toggle-track">
+         <span class="theme-toggle-thumb">🌙</span>
+       </span>
+     </button>
+
+   Pair with this JS (persists the choice and respects system default
+   until the user picks one explicitly):
+
+     const root = document.documentElement;
+     const toggle = document.getElementById('themeToggle');
+     const saved = localStorage.getItem('theme');
+     if (saved) root.setAttribute('data-theme', saved);
+     const isDark = () => root.getAttribute('data-theme') === 'dark' ||
+       (!root.getAttribute('data-theme') &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches);
+     toggle.setAttribute('aria-pressed', String(isDark()));
+     toggle.addEventListener('click', () => {
+       const next = isDark() ? 'light' : 'dark';
+       root.setAttribute('data-theme', next);
+       localStorage.setItem('theme', next);
+       toggle.setAttribute('aria-pressed', String(next === 'dark'));
+     });
+   ============================================================ */
+
+.theme-toggle {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    min-height: auto;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+
+.theme-toggle::before {
+    display: none;
+}
+
+.theme-toggle-track {
+    position: relative;
+    width: 52px;
+    height: 28px;
+    border-radius: 999px;
+    background: var(--indigo);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    display: inline-flex;
+    align-items: center;
+    padding: 3px;
+    transition: background var(--speed) ease, border-color var(--speed) ease;
+}
+
+.theme-toggle-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    line-height: 1;
+    transform: translateX(0);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--speed) ease;
+}
+
+[data-theme="dark"] .theme-toggle-thumb {
+    transform: translateX(24px);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]):not([data-theme="dark"]) .theme-toggle-thumb {
+        transform: translateX(24px);
+    }
+}
+
+.theme-toggle:hover .theme-toggle-track {
+    border-color: var(--cyan);
+}
+
+.theme-toggle:focus-visible .theme-toggle-track {
+    box-shadow: var(--glow-cyan-soft);
+}
+
 
 .cards {
     display: flex;
@@ -304,7 +490,7 @@ main.dashboard {
 .card p {
     font-size: 28px;
     font-weight: bold;
-    color: var(--indigo);
+    color: var(--heading);
 }
 
 /* second-row management cards (e.g. "Add / Manage Books") use plain body
@@ -377,7 +563,7 @@ button:active {
 }
 
 button:disabled {
-    background: #c3c8d6;
+    background: var(--border);
     color: var(--ink-faint);
     cursor: not-allowed;
     box-shadow: none;
@@ -432,6 +618,12 @@ a:hover {
     color: var(--cyan);
 }
 
+/* text selection highlight, themed to the brand accent in both modes */
+::selection {
+    background: var(--cyan);
+    color: var(--indigo-dark);
+}
+
 input {
     width: 100%;
     padding: 11px;
@@ -445,10 +637,22 @@ input {
 
     font-family: inherit;
     color: var(--ink);
+    background: var(--surface);
+
+    /* blinking text-cursor color follows the brand accent instead of
+       defaulting to plain black, which disappears on dark backgrounds */
+    caret-color: var(--cyan);
+
+    cursor: text;
 
     min-height: var(--tap);
 
     transition: border-color var(--speed) ease, box-shadow var(--speed) ease;
+}
+
+input:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
 }
 
 input:hover {
@@ -554,7 +758,7 @@ input[type="hidden"] {
 
 .login-container h1 {
     margin-bottom: 25px;
-    background: linear-gradient(120deg, var(--indigo) 0%, var(--cyan-dark) 100%);
+    background: linear-gradient(120deg, var(--heading) 0%, var(--cyan-dark) 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -689,7 +893,7 @@ input[type="hidden"] {
 }
 
 .book-table tbody tr:nth-child(even) {
-    background: #f8f9fc;
+    background: var(--stripe);
 }
 
 .book-table tbody tr:nth-child(even):hover {
