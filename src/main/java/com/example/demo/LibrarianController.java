@@ -22,15 +22,16 @@ public class LibrarianController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(
-            @RequestBody Librarian librarian) {
+public ResponseEntity<?> login(
+        @RequestBody Librarian librarian) {
+
+    try {
 
         Librarian loggedInLibrarian =
                 librarianService.login(
                     librarian.getUsername(),
                     librarian.getPassword()
                 );
-
 
         if (loggedInLibrarian == null) {
 
@@ -39,12 +40,18 @@ public class LibrarianController {
                     .body("Invalid username or password");
         }
 
-
         return ResponseEntity.ok(
             new LibrarianLoginResponse(
                 loggedInLibrarian.getId(),
                 loggedInLibrarian.getUsername()
             )
         );
+
+    } catch (RuntimeException e) {
+
+        return ResponseEntity
+                .status(HttpStatus.TOO_MANY_REQUESTS)
+                .body(e.getMessage());
     }
+}
 }

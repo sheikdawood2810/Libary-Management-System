@@ -82,17 +82,14 @@ function loginStudent() {
         }
     )
 
-    .then(response => {
+   .then(response => {
 
-        if (!response.ok) {
+    if (!response.ok) {
+        throw new Error("Invalid credentials");
+    }
 
-            throw new Error(
-                "Invalid credentials"
-            );
-        }
-
-        return response.json();
-    })
+    return response.json();
+})
 
     .then(student => {
 
@@ -169,17 +166,17 @@ function loginLibrarian() {
         }
     )
 
-    .then(response => {
+    .then(async response => {
 
-        if (!response.ok) {
+    if (!response.ok) {
 
-            throw new Error(
-                "Invalid credentials"
-            );
-        }
+        const errorMessage = await response.text();
 
-        return response.json();
-    })
+        throw new Error(errorMessage);
+    }
+
+    return response.json();
+})
 
     .then(librarian => {
 
@@ -202,13 +199,14 @@ function loginLibrarian() {
             "libarianpanel.html";
     })
 
-    .catch(error => {
+   .catch(error => {
 
-        console.error(error);
+    console.error(error);
 
-        message.textContent =
-            "Invalid Username or Password.";
-    });
+    message.textContent =
+        error.message ||
+        "Invalid Username or Password.";
+});
 }
 
 

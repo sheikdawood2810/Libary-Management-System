@@ -16,6 +16,10 @@ public class Librarian {
 
     private String password;
 
+    private int failedLoginAttempts = 0;
+
+     private Long lockUntil;
+
 
     public Long getId() {
         return id;
@@ -42,4 +46,20 @@ public class Librarian {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public int getFailedLoginAttempts() {
+    return failedLoginAttempts;
+}
+
+public void setFailedLoginAttempts(int failedLoginAttempts) {
+    this.failedLoginAttempts = failedLoginAttempts;
+}
+
+public Long getLockUntil() {
+    return lockUntil;
+}
+
+public void setLockUntil(Long lockUntil) {
+    this.lockUntil = lockUntil;
+}
 }
