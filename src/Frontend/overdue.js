@@ -95,3 +95,18 @@ fetch("https://libary-management-system-hblc.onrender.com/borrows")
         );
 
     });
+
+    function goDashboard() {
+
+    const currentRole = localStorage.getItem("role");
+
+    if (currentRole === "student") {
+        window.location.href = "studentpanel.html";
+    }
+    else if (currentRole === "librarian") {
+        window.location.href = "libarianpanel.html";
+    }
+    else {
+        window.location.href = "index.html";
+    }
+}
