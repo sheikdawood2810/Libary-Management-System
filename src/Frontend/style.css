@@ -406,6 +406,90 @@ main.dashboard {
     box-shadow: var(--glow-cyan-soft);
 }
 
+/* ============================================================
+   THEME BUTTONS (two explicit buttons instead of a slider)
+   Drop this markup wherever you want it, e.g. inside .nav-links:
+
+     <div class="theme-buttons" id="themeButtons">
+       <button type="button" class="theme-btn" data-theme-choice="light">☀️ Light</button>
+       <button type="button" class="theme-btn" data-theme-choice="dark">🌙 Dark</button>
+     </div>
+
+   Pair with this JS (persists the choice, and marks whichever button
+   matches the current theme — including the system default — as active):
+
+     const root = document.documentElement;
+     const btns = document.querySelectorAll('#themeButtons .theme-btn');
+
+     function currentTheme() {
+       return root.getAttribute('data-theme') ||
+         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+     }
+
+     function applyTheme(theme) {
+       root.setAttribute('data-theme', theme);
+       localStorage.setItem('theme', theme);
+       btns.forEach(b => b.classList.toggle('active', b.dataset.themeChoice === theme));
+     }
+
+     const saved = localStorage.getItem('theme');
+     applyTheme(saved || currentTheme());
+
+     btns.forEach(b => b.addEventListener('click', () => applyTheme(b.dataset.themeChoice)));
+   ============================================================ */
+
+.theme-buttons {
+    display: inline-flex;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-sm);
+    padding: 4px;
+}
+
+.theme-btn {
+    background: transparent;
+    color: #ffffff;
+    border: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 7px 12px;
+    min-height: 34px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.theme-btn::before {
+    display: none;
+}
+
+.theme-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    box-shadow: none;
+    transform: none;
+}
+
+.theme-btn.active {
+    background: linear-gradient(135deg, var(--cyan) 0%, var(--cyan-dark) 100%);
+    color: #ffffff;
+    box-shadow: var(--shadow-sm);
+}
+
+/* the buttons live on a dark navbar in this design; if you place them
+   on a light surface instead (e.g. the login card), use this variant */
+.theme-buttons.on-light {
+    background: var(--bg);
+    border-color: var(--border);
+}
+
+.theme-buttons.on-light .theme-btn {
+    color: var(--ink-soft);
+}
+
+.theme-buttons.on-light .theme-btn:hover {
+    background: var(--border-soft);
+}
+
 
 .cards {
     display: flex;

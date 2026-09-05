@@ -8,11 +8,26 @@
     <title>Library Management System</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <!-- apply saved/system theme immediately, before the page paints,
+         so there's no flash of the wrong mode -->
+    <script>
+        (function () {
+            var saved = localStorage.getItem('theme');
+            var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
 </head>
 
 <body>
 
     <div class="login-container">
+
+        <div class="theme-buttons on-light" id="themeButtons">
+            <button type="button" class="theme-btn" data-theme-choice="light">☀️ Light</button>
+            <button type="button" class="theme-btn" data-theme-choice="dark">🌙 Dark</button>
+        </div>
 
         <h1> Library Management System</h1>
 
@@ -159,6 +174,7 @@
     </div>
 
 
+    <script src="theme.js"></script>
     <script src="login.js"></script>
 
 </body>

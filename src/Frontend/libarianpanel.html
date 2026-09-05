@@ -8,6 +8,16 @@
     <title>Librarian Dashboard</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <!-- apply saved/system theme immediately, before the page paints,
+         so there's no flash of the wrong mode -->
+    <script>
+        (function () {
+            var saved = localStorage.getItem('theme');
+            var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
 </head>
 
 <body>
@@ -23,9 +33,16 @@
             <a href="borrows.html">Borrows</a>
             <a href="overdue.html">Overdue</a>
 
+            <div class="theme-buttons" id="themeButtons">
+                <button type="button" class="theme-btn" data-theme-choice="light">☀️ Light</button>
+                <button type="button" class="theme-btn" data-theme-choice="dark">🌙 Dark</button>
+            </div>
+
      <button type="button" onclick="logout()">
         Logout
      </button>
+
+    </div>
 
     </nav>
 
@@ -95,6 +112,7 @@
     requireLibrarian();
 </script>
 
+<script src="theme.js"></script>
 <script src="script.js"></script>
 </body>
 
