@@ -494,22 +494,21 @@ function updateBook() {
 
 function goDashboard() {
 
-    if (role === "student") {
+    const currentRole = localStorage.getItem("role");
 
-        window.location.href =
-            "studentpanel.html";
+    if (currentRole === "student") {
+
+        window.location.href = "studentpanel.html";
 
     }
-    else if (role === "librarian") {
+    else if (currentRole === "librarian") {
 
-        window.location.href =
-            "libarianpanel.html";
+        window.location.href = "libarianpanel.html";
 
     }
     else {
 
-        window.location.href =
-            "index.html";
+        window.location.href = "index.html";
     }
 }
 
