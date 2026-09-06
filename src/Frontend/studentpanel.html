@@ -19,13 +19,14 @@
         <h2> Library Management System</h2>
 
         <div class="nav-links">
-            <a href="studentpanel.html">Dashboard</a>
-            <a href="books.html">Books</a>
-            <a href="students.html">My Profile</a>
-            <a href="borrows.html">My Borrows</a>
+            <a href="studentpanel.html">Dashboard<i class="fa-solid fa-house"></i></a>
+            <a href="books.html">Books<i class="fa-solid fa-book-open"></i></a>
+            <a href="students.html">My Profile<i class="fa-regular fa-user"></i></a>
+            <a href="borrows.html">My Borrows<i class="fa-solid fa-arrows-left-right"></i></a>
 
    <button type="button" onclick="logout()">
         Logout
+    <i class="fa-solid fa-circle-left"></i>
      </button>
     </div>
 
@@ -46,7 +47,7 @@
             <div class="card"
                  onclick="window.location.href='books.html'">
 
-                <h3> Books</h3>
+                <h3> Books<i class="fa-solid fa-book-open"></i></h3>
 
                 <p id="totalBooks">0</p>
 
@@ -58,7 +59,7 @@
             <div class="card"
                  onclick="window.location.href='borrows.html'">
 
-                <h3> My Active Borrows</h3>
+                <h3> My Active Borrows<i class="fa-solid fa-arrows-left-right"></i></h3>
 
                 <p id="activeBorrows">0</p>
 
@@ -70,7 +71,7 @@
             <div class="card"
                  onclick="window.location.href='overdue.html'">
 
-                <h3> My Overdue Books</h3>
+                <h3> My Overdue Books<i class="fa-solid fa-xmark"></i></h3>
 
                 <p id="overdueBooks">0</p>
 
