@@ -72,8 +72,8 @@ fetch("https://libary-management-system-hblc.onrender.com/borrows")
 
             const message =
                 role === "student"
-                    ? "You have no overdue books 🎉"
-                    : "No overdue books 🎉";
+                    ? "You have no overdue books "
+                    : "No overdue books ";
 
 
             overdueList.innerHTML = `
